@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update User</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+
+            color: #000000; /* Text negru */
+            margin: 0; /* Eliminăm marginile implicite */
+            padding: 0; /* Eliminăm padding-ul implicite */
+            background-image: url('https://images-na.ssl-images-amazon.com/images/I/916hGAvFMDL._AC_SX569_.jpg'); /* Adăugăm imaginea ca fundal */
+            background-size: cover; /* Asigurăm că imaginea se va întinde pentru a acoperi întreaga suprafață */
+            background-position: center; /* Poziționăm imaginea pe centru */
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+        .form-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            color: #4b0505; /* Text alb pentru formular */
+        }
+        h2 {
+            text-align: center;
+        }
+        .success-message {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+        }
+
+        /* Stil pentru mesajele de eroare și succes */
+        .error-message {
+            color: red;
+        }
+
+        .success-message {
+            color: green;
+        }
+
+        .btn-back a {
+            color: #4b0505; /* Visiniu închis */
+            background-color: #dea074; /* Bej închis */
+            padding: 10px 20px; /* Margini pentru buton */
+            text-decoration: none; /* Eliminăm sublinierea */
+            border-radius: 5px; /* Rotunjim marginile */
+        }
+        .btn-back a:hover {
+            color: #8b4513; /* Schimbăm culoarea textului la hover */
+            background-color: #f5deb3; /* Schimbăm culoarea fundalului la hover */
+        }
+    </style>
+</head>
+<body>
+<div class = "btn-back">
+<a href="/adminPageForUsers" class="btn btn-secondary">Back to Admin Page</a>
+</div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center">Update User</h2>
+
+            <p th:if="${errors != null}">
+                <!-- Display errors -->
+                <span th:text="${errors}" style="color: red"/>
+            </p>
+            <!-- Show success message if errors is null -->
+            <p th:unless="${errors != null}">
+                <span th:text="${success}" style="color: green"/>
+            </p>
+            <div class="form-container">
+                <form id="updateUserForm" class="form" method="POST" action="/user/updateUser">
+                    <div class="form-group">
+                        <label for="userId">User ID:</label>
+                        <input type="text" id="userId" name="userId" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" id="firstName" name="firstNameUser" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" id="lastName" name="secondNameUser" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Role:</label>
+                        <input type="text" id="role" name="role" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" name="age" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="emailUser" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="passwordUser" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Update User</button><br>
+                    <div class="success-message" id="successMessage">
+                        User updated successfully!
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Template</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #FFE4C4;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #FFE4C4;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative; /* Permite poziționarea relativă pentru a controla poziționarea imaginii */
+        }
+        h1 {
+            color: #1C5C44FF;
+        }
+        p {
+            color: #1c5c44;
+        }
+        img {
+            width: 100px; /* Redimensionează imaginea la lățimea de 100px */
+            height: auto; /* Menține proporțiile */
+            position: absolute; /* Poziționează absolut */
+            top: 20px; /* Poziționează la 20px de la marginea de sus */
+            right: 20px; /* Poziționează la 20px de la marginea dreaptă */
+            border-radius: 5px; /* Adaugă un efect de margini rotunjite */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Adaugă o umbra pentru efect */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>{{subject}}</h1>
+    <p>{{message}}</p>
+    <img src="https://www.tasteofhome.com/wp-content/uploads/2018/01/exps28800_UG143377D12_18_1b_RMS.jpg" alt="Description of external image">
+</div>
+</body>
+</html>

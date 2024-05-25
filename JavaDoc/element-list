@@ -1,0 +1,14 @@
+com.example.martybackend
+com.example.martybackend.config
+com.example.martybackend.constants
+com.example.martybackend.controller
+com.example.martybackend.csv
+com.example.martybackend.dtos
+com.example.martybackend.dtos.mappers
+com.example.martybackend.email
+com.example.martybackend.entity
+com.example.martybackend.notifsocket
+com.example.martybackend.pdfandtxt
+com.example.martybackend.repository
+com.example.martybackend.service
+com.example.martybackend.validators

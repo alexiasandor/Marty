@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List and Generate CSV</title>
+    <style>
+        body {
+            background-image: url('https://images-na.ssl-images-amazon.com/images/I/916hGAvFMDL._AC_SX569_.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center; /* Centrare pe orizontală */
+            align-items: center; /* Centrare pe verticală */
+            height: 100vh; /* Facem fundalul să acopere întreaga înălțime a ecranului */
+            margin: 0; /* Eliminăm marginile pentru a evita spațiile goale */
+        }
+
+        .container {
+            max-width: 800px; /* Setăm lățimea maximă a containerului */
+            background-color: rgba(255, 255, 255, 0.8); /* Adăugăm un fundal opac containerului */
+            padding: 20px; /* Adăugăm un spațiu în jurul conținutului */
+            border-radius: 10px; /* Rotunjim colțurile containerului */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="text-center">List All Products</h2>
+            <div class="form-container">
+                <form id="listProductsForm" class="form" method="GET" action="/product/getAllProductsForCsv">
+                    <button type="submit" class="btn btn-success btn-block">List All Products</button>
+                </form>
+            </div>
+            <div id="allProductsTable" th:if="${products}">
+                <h4>All Products:</h4>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                        <th>Select</th> <!-- Adăugăm o coloană pentru căsuțele de selectare -->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Parcurgem fiecare produs și afișăm informațiile despre acesta -->
+                    <tr th:each="product : ${products}">
+                        <td th:text="${product.productId}">ID</td>
+                        <td th:text="${product.productName}">Name</td>
+                        <td th:text="${product.price}">Price</td>
+                        <td th:text="${product.description}">Description</td>
+                        <td>
+                            <!-- Adăugăm o căsuță de selectare lângă fiecare produs -->
+                            <input type="checkbox" class="product-checkbox" data-name="${product.productName}" data-price="${product.price}">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2 class="text-center">Generate CSV</h2>
+            <div class="form-container">
+                <!-- Butonul pentru a genera fișierul CSV -->
+                <button id="generateCSVBtn" class="btn btn-primary btn-block" onclick="generateCSV()">Generate CSV</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function generateCSV() {
+        let csvContent = 'Product Name,Price\n'; // Inițializăm conținutul fișierului CSV cu antetul
+
+        // Obținem toate căsuțele de selectare ale produselor
+        const checkboxes = document.querySelectorAll('.product-checkbox');
+
+        // Parcurgem fiecare căsuță de selectare și verificăm dacă este bifată
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                const productName = checkbox.getAttribute('data-name');
+                const productPrice = checkbox.getAttribute('data-price');
+                csvContent += `${productName} ${productPrice}\n`; // Adăugăm produsul în conținutul CSV
+            }
+        });
+
+        downloadCSV(csvContent); // Descărcăm fișierul CSV
+    }
+
+    function downloadCSV(csvContent) {
+        const blob = new Blob([csvContent], {type: 'text/csv'});
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'products.csv'; // Numele fișierului CSV
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+    }
+</script>
+</body>
+</html>

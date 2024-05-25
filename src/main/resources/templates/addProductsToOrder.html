@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Products to Order</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('https://images-na.ssl-images-amazon.com/images/I/916hGAvFMDL._AC_SX569_.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        .container {
+            text-align: center;
+            border: 2px solid rgba(239, 189, 150, 0.92);
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: rgba(248, 234, 218, 0.92);
+        }
+        .message {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.96);
+            background-color: rgba(239, 189, 150, 0.92);
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: rgba(231, 167, 119, 0.62);
+        }
+        h2 {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            text-align: center;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<h2>Add Products to Order</h2>
+
+<div class="container">
+    <!-- Display Success or Error Messages -->
+    <div class="message" th:if="${param.success}">
+        <p style="color: green;">Product(s) added to order successfully!</p>
+    </div>
+    <div class="message" th:if="${param.error}">
+        <p style="color: red;">Order not found!</p>
+    </div>
+
+    <form action="/ord/addProductsToOrd" method="POST">
+        <label>
+            Table Number: <input type="number" id="tableNr" name="tableNr" required><br><br>
+        </label>
+        <label for="productList">Product IDs (separated by comma):</label>
+        <input type="text" id="productList" name="productList" required><br><br>
+        <input type="submit" value="Send">
+    </form>
+
+    <a href="/orderPrice" class="btn">Calculate Order Price</a>
+    <br> <br>
+    <a href="http://localhost:8080/chelner" class="btn btn-secondary">Back to waiter options</a>
+
+</div>
+</body>
+</html>

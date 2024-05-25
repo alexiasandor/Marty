@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Orders</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            color: #000000; /* Text negru */
+            margin: 0; /* Eliminăm marginile implicite */
+            padding: 0; /* Eliminăm padding-ul implicite */
+            background-image: url('https://images-na.ssl-images-amazon.com/images/I/916hGAvFMDL._AC_SX569_.jpg'); /* Adăugăm imaginea ca fundal */
+            background-size: cover; /* Asigurăm că imaginea se va întinde pentru a acoperi întreaga suprafață */
+            background-position: center; /* Poziționăm imaginea pe centru */
+            display: flex; /* Folosim flexbox */
+            justify-content: center; /* Centrăm pe orizontală */
+            align-items: center; /* Centrăm pe verticală */
+            height: 100vh; /* Înalțimea completă a viewport-ului */
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 800px; /* Lățime maximă pentru container */
+            background: rgba(255, 255, 255, 0.8); /* Fundal semi-transparent pentru container */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container {
+            margin-bottom: 20px; /* Spațiu între formular și tabel */
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #800000; /* Visiniu */
+            border-collapse: collapse;
+            background-color: #f5f5dc; /* Bej */
+        }
+
+        th, td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+            background-color: #f6eded;
+            color: #800000; /* Visiniu */
+        }
+
+        th {
+            background-color: #f8f9fa; /* Culoare fundal antet tabel */
+            font-weight: bold;
+            text-align: left;
+        }
+
+        /* Stil pentru mesajele de eroare și succes */
+        .alert {
+            margin-top: 10px;
+        }
+
+        .btn-back {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 9999; /* Asigurăm că butonul este vizibil peste tot */
+        }
+
+        .btn-back a {
+            color: #4b0505; /* Visiniu închis */
+            background-color: #dea074; /* Bej închis */
+            padding: 10px 20px; /* Margini pentru buton */
+            text-decoration: none; /* Eliminăm sublinierea */
+            border-radius: 5px; /* Rotunjim marginile */
+        }
+
+        .btn-back a:hover {
+            color: #8b4513; /* Schimbăm culoarea textului la hover */
+            background-color: #f5deb3; /* Schimbăm culoarea fundalului la hover */
+        }
+
+        /* Stil pentru mesajele de eroare și succes */
+        .error-message {
+            color: red;
+        }
+
+        .success-message {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="btn-back">
+        <a href="http://localhost:8080/adminPageForUsers">Back to admin options</a>
+    </div>
+    <h2 class="text-center">View User Activity</h2>
+    <p th:if="${errors != null}" class="error-message">
+        <span th:text="${errors}"></span>
+    </p>
+
+    <!-- Display success message if errors is null -->
+    <p th:unless="${errors != null}" class="success-message">
+        <span th:text="${success}"></span>
+    </p>
+
+    <div class="form-container">
+        <form id="listOrdsForm" class="form" method="POST" action="/ord/getOrdByUserId/{id}">
+            <div class="form-group">
+                <label for="userId">User ID:</label>
+                <input type="text" id="userId" name="id" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-success btn-block">Find</button>
+        </form>
+    </div>
+    <div id="allOrdsByUser" th:if="${ords}">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Table Nr</th>
+                <th>Waiter's ID</th>
+                <th>Waiter's First Name</th>
+                <th>Waiter's Second Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Utilizăm Thymeleaf pentru a itera prin lista de orders -->
+            <tr th:each="ord : ${ords}">
+                <td th:text="${ord.ord_Id}">Order ID</td>
+                <td th:text="${ord.tableNr}">Table Nr</td>
+                <td th:text="${ord.user.getUserId()}">Waiter's ID</td>
+                <td th:text="${ord.user.getFirstNameUser()}">Waiter's First Name</td>
+                <td th:text="${ord.user.getSecondNameUser()}">Waiter's Second Name</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

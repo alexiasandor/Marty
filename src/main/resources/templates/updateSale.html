@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update User</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+
+            color: #000000; /* Text negru */
+            margin: 0; /* Eliminăm marginile implicite */
+            padding: 0; /* Eliminăm padding-ul implicite */
+            background-image: url('https://images-na.ssl-images-amazon.com/images/I/916hGAvFMDL._AC_SX569_.jpg'); /* Adăugăm imaginea ca fundal */
+            background-size: cover; /* Asigurăm că imaginea se va întinde pentru a acoperi întreaga suprafață */
+            background-position: center; /* Poziționăm imaginea pe centru */
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+        .form-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            color: #4b0505;
+        }
+        h2 {
+            text-align: center;
+
+        }
+        .success-message {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+        }
+        /* Stil pentru mesajele de eroare și succes */
+        .error-message {
+            color: red;
+        }
+
+        .success-message {
+            color: green;
+        }
+    </style>
+</head>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center">Update Sale</h2>
+
+            <!-- Afișare erori -->
+            <p th:if="${errors != null}" class="error-message">
+                <!-- Display errors -->
+                <span th:text="${errors}" />
+            </p>
+
+            <!-- Afișare succes -->
+            <p th:unless="${errors != null}" class="success-message">
+                <!-- Show success message if errors is null -->
+                <span th:text="${success}" />
+            </p>
+            <div class="form-container">
+                <form id="updateSaleForm" class="form" method="POST" action="/sale/updateSale">
+
+                    <div class="form-group">
+                        <label for="saleId">ID</label>
+                        <input type="text" class="form-control" id="saleId" name="saleId" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="saleName">Sale Name</label>
+                        <input type="text" class="form-control" id="saleName" name="saleName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="percent">Percentage</label>
+                        <input type="number" class="form-control" id="percent" name="percent" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Update Sale</button>
+                    <br>
+                    <a href="http://localhost:8080/adminPageForSales" class="btn btn-secondary">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+</html>

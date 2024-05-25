@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Users</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+
+            color: #000000; /* Text negru */
+            margin: 0; /* Eliminăm marginile implicite */
+            padding: 0; /* Eliminăm padding-ul implicite */
+            background-image: url('https://images-na.ssl-images-amazon.com/images/I/916hGAvFMDL._AC_SX569_.jpg'); /* Adăugăm imaginea ca fundal */
+            background-size: cover; /* Asigurăm că imaginea se va întinde pentru a acoperi întreaga suprafață */
+            background-position: center; /* Poziționăm imaginea pe centru */
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+        .form-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+
+        /* Stilizare butoane */
+        .btn {
+            margin-top: 10px;
+        }
+
+        /* Stilizare tabel */
+        table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #800000; /* Visiniu */
+            border-collapse: collapse;
+            background-color: #f5f5dc; /* Bej */
+        }
+
+        th,
+        td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+            background-color: #f6eded;
+            color: #800000; /* Visiniu */
+        }
+
+        th {
+            background-color: #f8f9fa; /* Culoare fundal antet tabel */
+            font-weight: bold;
+            text-align: left;
+        }
+
+        /* Stilizare pentru a face tabelul responsive */
+        .table-responsive {
+            overflow-x: auto;
+        }
+        /* Stil pentru mesajele de eroare și succes */
+        .error-message {
+            color: red;
+        }
+
+        .success-message {
+            color: green;
+        }
+        .btn-back a {
+            color: #4b0505; /* Visiniu închis */
+            background-color: #dea074; /* Bej închis */
+            padding: 10px 20px; /* Margini pentru buton */
+            text-decoration: none; /* Eliminăm sublinierea */
+            border-radius: 5px; /* Rotunjim marginile */
+        }
+        .btn-back a:hover {
+            color: #8b4513; /* Schimbăm culoarea textului la hover */
+            background-color: #f5deb3; /* Schimbăm culoarea fundalului la hover */
+        }
+    </style>
+</head>
+<body>
+<div class="btn-back">
+    <a href="/adminPageForProducts" >Back to Admin Page</a>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="text-center"> Find Product by ID</h2>
+
+            <!-- Afișare erori -->
+            <p th:if="${errors != null}" class="error-message">
+                <!-- Display errors -->
+                <span th:text="${errors}" />
+            </p>
+
+            <!-- Afișare succes -->
+            <p th:unless="${errors != null}" class="success-message">
+                <!-- Show success message if errors is null -->
+                <span th:text="${success}" />
+            </p>
+            <div class="form-container">
+                <form id="findProductForm" class="form" method="POST" action="/product/getProductById/{id}">
+                    <div class="form-group">
+                        <label for="productId">Product ID:</label>
+                        <input type="text" id="productId" name="id" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Find Product</button>
+                </form>
+            </div>
+            <div id="errorMessage" class="alert alert-danger mt-3" th:if="${errorMessage}" th:text="${errorMessage}" style="display: none;"></div>
+        </div>
+        <div class="col-md-6">
+            <h2 class="text-center"> List All Products</h2>
+            <div class="form-container">
+                <form id="listProductsForm" class="form" method="GET" action="/product/getAllProducts">
+                    <select id="sortSelect" class="form-control">
+                        <option value="all">All</option>
+                        <option value="bauturi">Bauturi</option>
+                        <option value="carne">Carne</option>
+                        <option value="vegan">Vegan</option>
+                        <option value="garnitura">Garnitura</option>
+                        <option value="paste">Paste</option>
+                        <option value="fructeDeMare">Fructe de mare</option>
+                        <option value="supe">Supe</option>
+
+
+                    </select>
+                    <button type="submit" class="btn btn-success btn-block">List All Products</button>
+                </form>
+            </div>
+            <div id="allProductsTable" th:if="${products}">
+                <h4>All Products:</h4>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th> Name</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="product : ${products}">
+                        <td th:text="${product.productId}">ID</td>
+                        <td th:text="${product.productName}"> Name</td>
+                        <td th:text="${product.price}">Price</td>
+                        <td th:text="${product.description}">Description</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="productById" th:if="${product}">
+        <h2 class="text-center mt-5">Product Found by ID</h2>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th> Name</th>
+                <th>Price</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${product.productId}">ID</td>
+                <td th:text="${product.productName}"> Name</td>
+                <td th:text="${product.price}">Price</td>
+                <td th:text="${product.description}">Description</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+<script>
+    document.getElementById('sortSelect').addEventListener('change', function() {
+        var selectedValue = this.value;
+        var form = document.getElementById('listProductsForm');
+        var submitBtn = document.getElementById('submitBtn');
+        if (selectedValue === 'bauturi') {
+            form.action = '/product/getAllProductsbyDescriptionB';
+            submitBtn.textContent = 'Bauturi';
+        } else if (selectedValue === 'carne') {
+            form.action = '/product/getAllProductsbyDescriptionC';
+            submitBtn.textContent = 'Carne';
+        }else if (selectedValue === 'vegan') {
+            form.action = '/product/getAllProductsbyDescriptionV';
+            submitBtn.textContent = 'Vegan';
+        }else if (selectedValue === 'garnitura') {
+            form.action = '/product/getAllProductsbyDescriptionG';
+            submitBtn.textContent = 'Garnitura';
+        }else if (selectedValue === 'paste') {
+            form.action = '/product/getAllProductsbyDescriptionP';
+            submitBtn.textContent = 'Paste';
+        }
+        else if (selectedValue === 'fructeDeMare') {
+            form.action = '/product/getAllProductsbyDescriptionF';
+            submitBtn.textContent = 'Fructe de mare';
+        }else if (selectedValue === 'supe') {
+            form.action = '/product/getAllProductsbyDescriptionS';
+            submitBtn.textContent = 'Supe';
+        }else if (selectedValue === 'all') {
+            form.action = '/product/getAllProducts';
+            submitBtn.textContent = 'All';
+        }
+    });
+
+    document.getElementById('submitBtn').addEventListener('click', function() {
+        document.getElementById('listProductsForm').submit();
+    });
+</script>
+</body>
+</html>

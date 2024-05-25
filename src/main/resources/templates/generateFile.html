@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate File</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('https://images-na.ssl-images-amazon.com/images/I/916hGAvFMDL._AC_SX569_.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        form {
+            width: 50%;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Adăugăm un fundal opac pentru formular */
+            padding: 20px; /* Adăugăm un spațiu în jurul conținutului formularului */
+            border-radius: 10px; /* Rotunjim colțurile formularului */
+        }
+        label, input, select, textarea, button {
+            display: block;
+            margin: 10px auto;
+        }
+        button {
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+
+<form id="generateForm" action="/generate" method="post">
+    <h1>Generate Invoice</h1>
+    <label for="fileType">Select file type:</label>
+
+    <select id="fileType" name="fileType">
+        <option value="pdf">PDF</option>
+        <option value="txt">TXT</option>
+    </select>
+
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" name="firstName" required>
+
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" name="lastName" required>
+
+    <label for="invoiceValue">Invoice Value:</label>
+    <input type="number" id="invoiceValue" name="invoiceValue" required>
+
+    <label for="additionalInfo">Additional Information:</label>
+    <textarea id="additionalInfo" name="additionalInfo"></textarea>
+    <button type="button" onclick="generateFile()">Generate</button>
+</form>
+
+<script>
+    function generateFile() {
+        // Obținem valorile introduse de utilizator
+        const fileType = document.getElementById("fileType").value;
+        const firstName = document.getElementById("firstName").value;
+        const lastName = document.getElementById("lastName").value;
+        const invoiceValue = document.getElementById("invoiceValue").value;
+        const additionalInfo = document.getElementById("additionalInfo").value;
+
+        // Creăm un obiect FormData cu datele formularului
+        const data = {
+            fileType: fileType,
+            firstName: firstName,
+            lastName: lastName,
+            invoiceValue: invoiceValue,
+            additionalInfo: additionalInfo
+        };
+
+        fetch('/generate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'invoice.' + fileType;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+            });
+
+    }
+</script>
+</body>
+</html>

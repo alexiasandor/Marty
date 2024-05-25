@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Sales by ID</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+
+            color: #000000; /* Text negru */
+            margin: 0; /* Eliminăm marginile implicite */
+            padding: 0; /* Eliminăm padding-ul implicite */
+            background-image: url('https://images-na.ssl-images-amazon.com/images/I/916hGAvFMDL._AC_SX569_.jpg'); /* Adăugăm imaginea ca fundal */
+            background-size: cover; /* Asigurăm că imaginea se va întinde pentru a acoperi întreaga suprafață */
+            background-position: center; /* Poziționăm imaginea pe centru */
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: #efede9; /* Fundal alb pentru formular */
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 700px; /* Limitarea latimii formularului */
+            width: 100%; /* Latimea formularului sa fie 100% din container */
+        }
+
+        .form-group {
+            text-align: center; /* Centrare text in interiorul formularului */
+        }
+
+        .btn {
+            background-color: #ded9b6;
+            border-color: #e7dbad;
+            color: #4b0505;
+            padding: 10px 70px;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #c9c4a4;
+            border-color: #c9c48e; /* Schimbare culoare chenar buton la hover */
+        }
+
+
+
+        /* Stil pentru mesajele de eroare și succes */
+        .error-message {
+            color: red;
+        }
+
+        .success-message {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 form-container">
+            <h2 class="text-center mb-4">Delete Sale by ID</h2>
+            <!-- Afișare erori -->
+            <p th:if="${errors != null}" class="error-message">
+                <!-- Display errors -->
+                <span th:text="${errors}" />
+            </p>
+
+            <!-- Afișare succes -->
+            <p th:unless="${errors != null}" class="success-message">
+                <!-- Show success message if errors is null -->
+                <span th:text="${success}" />
+            </p>
+
+            <form id="deleteForm" method="POST" action="/sale/deleteSale/{id}">
+                <input type="hidden" name="_method" value="DELETE">
+                <div class="form-group">
+                    <label for="productId">Sale ID</label>
+                    <input type="text" class="form-control" id="productId" name="id" required>
+                </div>
+                <button type="submit" class="btn btn-danger btn-block">Delete Sale</button> <br><br>
+
+                <a href="http://localhost:8080/adminPageForSales" class="btn btn-secondary">Back</a>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New User</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+
+            color: #000000; /* Text negru */
+            margin: 0; /* Eliminăm marginile implicite */
+            padding: 0; /* Eliminăm padding-ul implicite */
+            background-image: url('https://images-na.ssl-images-amazon.com/images/I/916hGAvFMDL._AC_SX569_.jpg'); /* Adăugăm imaginea ca fundal */
+            background-size: cover; /* Asigurăm că imaginea se va întinde pentru a acoperi întreaga suprafață */
+            background-position: center; /* Poziționăm imaginea pe centru */
+        }
+        .container {
+            margin-top: 50px;
+
+
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 10px; /* Adăugat margin pentru distanțare între butoane */
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Stil pentru mesajele de eroare și succes */
+        .error-message {
+            color: red;
+        }
+
+        .success-message {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 form-container">
+            <h2>Add New User</h2>
+
+            <!-- Afișare erori -->
+            <p th:if="${errors != null}" class="error-message">
+                <!-- Display errors -->
+                <span th:text="${errors}" />
+            </p>
+
+            <!-- Afișare succes -->
+            <p th:unless="${errors != null}" class="success-message">
+                <!-- Show success message if errors is null -->
+                <span th:text="${success}" />
+            </p>
+
+            <form method="POST" action="/user/do">
+                <div class="form-group">
+                    <label for="firstNameUser">First Name</label>
+                    <input type="text" class="form-control" id="firstNameUser" name="firstNameUser" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="secondNameUser">Second Name</label>
+                    <input type="text" class="form-control" id="secondNameUser" name="secondNameUser" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <input type="text" class="form-control" id="role" name="role" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" class="form-control" id="age" name="age" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="emailUser">Email</label>
+                    <input type="email" class="form-control" id="emailUser" name="emailUser" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="passwordUser">Password</label>
+                    <input type="password" class="form-control" id="passwordUser" name="passwordUser" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add User</button>
+
+
+                <a href="/adminPageForUsers" class="btn btn-secondary">Back to Admin Page</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

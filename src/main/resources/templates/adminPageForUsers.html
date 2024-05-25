@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      rel="stylesheet" id="bootstrap-css">
+<html lang="en" xmlns:th="http://www.thyneleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            color: #000000;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://images-na.ssl-images-amazon.com/images/I/916hGAvFMDL._AC_SX569_.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .btn {
+            width: 200px;
+            margin-bottom: 10px;
+            background-color: beige; /* Schimbăm culoarea butoanelor în bej */
+            border-color: beige; /* Schimbăm culoarea conturului butoanelor în bej */
+            color: #000;
+            outline: none;
+            box-shadow: none;
+        }
+
+        .btn:hover {
+            background-color: #dbbfa0; /* Schimbăm culoarea butoanelor în bej mai închis la hover */
+            border-color: #dbbfa0; /* Schimbăm culoarea conturului butoanelor în bej mai închis la hover */
+            color: #000;
+        }
+
+        .btn-back-to-admin {
+            background-color: beige; /* Schimbăm culoarea butonului de back în bej */
+            border-color: beige; /* Schimbăm culoarea conturului butonului de back în bej */
+            padding: 5px 10px; /* Reducem padding-ul butonului de back */
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h1>Welcome Admin!</h1>
+    <a href="/sendEmail" class="btn btn-warning btn-lg btn-block mb-3">Send Email</a>
+
+    <a href="/addUser" class="btn btn-primary btn-lg btn-block mb-3">Add User</a>
+
+    <a href="/deleteUser" class="btn btn-danger btn-lg btn-block mb-3">Delete User</a>
+
+    <a href="/getAllUsers" class="btn btn-info btn-lg btn-block mb-3">View Users</a>
+
+    <a href="/updateUser" class="btn btn-warning btn-lg btn-block mb-3">Update User</a>
+
+    <a href="/viewUserActivity" class="btn btn-warning btn-lg btn-block mb-3">View Users Activity</a>
+    <a href="/happyDay" class="btn btn-warning btn-lg btn-block mb-3">HappyDay</a>
+
+    <a href="http://localhost:8080/adminPage" class="btn btn-secondary btn-back-to-admin">Back to Admin Page</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+
+      color: #000000; /* Text negru */
+      margin: 0; /* Eliminăm marginile implicite */
+      padding: 0; /* Eliminăm padding-ul implicite */
+      background-image: url('https://images-na.ssl-images-amazon.com/images/I/916hGAvFMDL._AC_SX569_.jpg'); /* Adăugăm imaginea ca fundal */
+      background-size: cover; /* Asigurăm că imaginea se va întinde pentru a acoperi întreaga suprafață */
+      background-position: center; /* Poziționăm imaginea pe centru */
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #ffffff; /* Text alb pentru titlu */
+    }
+
+    .btn {
+      width: 200px;
+      margin-bottom: 10px;
+      background-color: #007bff; /* Buton albastru */
+      border-color: #007bff; /* Culoare chenar buton */
+      color: #ffffff; /* Text alb pe buton */
+    }
+
+    .btn:hover {
+      background-color: #0056b3; /* Schimbare culoare buton la hover */
+      border-color: #0056b3; /* Schimbare culoare chenar buton la hover */
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Welcome Admin!</h1>
+
+  <a href="/addProduct" class="btn btn-primary btn-lg btn-block mb-3">Add Product</a>
+
+  <a href="/deleteProduct" class="btn btn-primary btn-lg btn-block mb-3">Delete Product</a>
+
+  <a href="/getAllProducts" class="btn btn-primary btn-lg btn-block mb-3">View Product</a>
+
+  <a href="/updateProduct" class="btn btn-primary btn-lg btn-block mb-3">Update Product</a>
+</div>
+</body>
+</html>

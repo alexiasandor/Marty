@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>WELCOME TO MARTY'S STAFF</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <style>
+        body {
+            color: #000000; /* Text negru */
+            margin: 0; /* Eliminăm marginile implicite */
+            padding: 0; /* Eliminăm padding-ul implicite */
+            background-image: url('https://images-na.ssl-images-amazon.com/images/I/916hGAvFMDL._AC_SX569_.jpg'); /* Fundalul principal */
+            background-size: cover; /* Asigurăm că imaginea se va întinde pentru a acoperi întreaga suprafață */
+            background-position: center; /* Poziționăm imaginea pe centru */
+        }
+        .header {
+            text-align: center;
+            margin-top: 20px;
+            text-shadow: 2px 2px 4px #000000; /* Adăugăm umbre textului */
+        }
+        .container {
+            position: absolute; /* Setăm poziția absolută pentru a-l centra în mijloc */
+            top: 50%; /* Plasăm container-ul la jumătatea înălțimii ferestrei */
+            left: 50%; /* Plasăm container-ul la jumătatea lățimii ferestrei */
+            transform: translate(-50%, -50%); /* Centrăm container-ul atât pe orizontală, cât și pe verticală */
+            text-align: center; /* Aliniem textul la centru */
+            padding: 20px; /* Adăugăm puțin spațiu în jurul containerului */
+            background-image: url('https://storage.needpix.com/rsynced_images/paper-2500380_1280.jpg'); /* Imaginea cu hartia */
+            background-size: cover; /* Asigurăm că imaginea se va întinde pentru a acoperi întreaga suprafață */
+            border-radius: 10px; /* Rotunjim marginile containerului */
+            max-width: 60%; /* Limităm lățimea maximă */
+        }
+        .container-inner {
+            padding: 20px; /* Adăugăm puțin spațiu în jurul containerului interior */
+            background: rgba(255, 255, 255, 0.8); /* Adăugăm un fundal opac alb pentru conținutul interior */
+            border-radius: 10px; /* Rotunjim marginile containerului interior */
+        }
+        .input-group-prepend {
+            position: absolute; /* Setăm poziția absolută pentru a plasa pictograma în afara containerului */
+            left: 0; /* Plasăm pictograma în stânga containerului */
+            top: 0; /* Aliniem pictograma cu partea de sus a containerului */
+            bottom: 0; /* Aliniem pictograma cu partea de jos a containerului */
+            width: 40px; /* Specificăm lățimea pictogramei */
+            display: flex; /* Permiterea alinierii elementelor copil */
+            justify-content: center; /* Aliniem orizontal pictograma în centrul containerului */
+            align-items: center; /* Aliniem vertical pictograma în centrul containerului */
+        }
+        .input-group-text {
+            background: transparent; /* Eliminăm fundalul pentru pictograma */
+            border: none; /* Eliminăm orice border pentru pictograma */
+            padding: 0; /* Eliminăm padding-ul pentru pictograma */
+        }
+        #emailUser, #passwordUser {
+            padding-left: 40px; /* Adăugăm spațiu pentru a acomoda pictograma */
+            background-repeat: no-repeat;
+            background-position: left center;
+        }
+        #emailUser {
+            background-image: url('https://th.bing.com/th/id/OIP.fW8_Ggln4tfy58uVuFT8TgHaHa?rs=1&pid=ImgDetMain'); /* Adăugăm pictograma pentru email */
+            background-size: 20px auto; /* Specificăm dimensiunea imaginii */
+        }
+        #passwordUser {
+            background-image: url('https://www.svgrepo.com/show/76807/password.svg'); /* Adăugăm pictograma pentru parolă */
+            background-size: 20px 20px; /* Specificăm dimensiunea imaginii */
+            background-position: 10px center; /* Plasăm imaginea la stânga câmpului de introducere a parolei */
+            padding-left: 40px; /* Adăugăm spațiu pentru a acomoda pictograma */
+        }
+        .btn-primary {
+            background-color: #efd8a9 !important; /* Schimbăm culoarea butonului */
+            border-color: #efd8a9 !important; /* Schimbăm culoarea border-ului butonului */
+        }
+
+        /* Create the bubble animation */
+        @keyframes moveBubbles {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-100vh); }
+            100% { transform: translateY(0); }
+        }
+
+        /* Style the bubble */
+        .bubble {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: rgba(255, 255, 255, 0.7); /* Bubble color */
+            border-radius: 50%; /* Rounded shape */
+            animation: moveBubbles 8s infinite ease-in-out; /* Apply animation */
+        }
+
+        /* Position the bubbles */
+        .bubble1 { left: 10%; bottom: -10px; animation-delay: 0s; }
+        .bubble2 { left: 20%; bottom: -10px; animation-delay: 1s; }
+        .bubble3 { left: 30%; bottom: -10px; animation-delay: 2s; }
+        .bubble4 { left: 40%; bottom: -10px; animation-delay: 3s; }
+        .bubble5 { left: 50%; bottom: -10px; animation-delay: 4s; }
+        .bubble6 { left: 60%; bottom: -10px; animation-delay: 5s; }
+        .bubble7 { left: 70%; bottom: -10px; animation-delay: 6s; }
+        .bubble8 { left: 80%; bottom: -10px; animation-delay: 7s; }
+        .bubble9 { left: 90%; bottom: -10px; animation-delay: 8s; }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h2>WELCOME TO MARTY'S STAFF</h2>
+</div>
+<div class="container">
+    <!-- Adăugare afișare mesaj de eroare -->
+    <div th:if="${error}" class="error-message">
+        <p th:text="${error}"></p>
+    </div>
+    <div class="container-inner">
+        <form id="loginForm" th:action="@{/redirect}" method="post">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="text" class="form-control" id="emailUser" name="username" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <div class="input-group-prepend">
+                    <span class="input-group-text"></span>
+                </div>
+                <input type="password" class="form-control" id="passwordUser" name="password" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <label>Role</label>
+                <select class="form-control" id="role" name="role">
+                    <option value="admin">admin</option>
+                    <option value="chelner">chelner</option>
+                    <option value="ajutor bucatarie">ajutor bucatarie</option>
+                    <option value="client">client</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+</div>
+
+<!-- Moving Bubbles -->
+<div class="bubble bubble1"></div>
+<div class="bubble bubble2"></div>
+<div class="bubble bubble3"></div>
+<div class="bubble bubble4"></div>
+<div class="bubble bubble5"></div>
+<div class="bubble bubble6"></div>
+<div class="bubble bubble7"></div>
+<div class="bubble bubble8"></div>
+<div class="bubble bubble9"></div>
+
+<script>
+    // Funcție pentru a actualiza activitatea utilizatorului în Local Storage
+    function updateActivityOnLogin() {
+        // Obținem adresa de email a utilizatorului introdusă în formularul de conectare
+        let userEmail = document.getElementById('emailUser').value;
+
+        // Verificăm dacă adresa de email este validă
+        if (userEmail) {
+            // Obținem activitatea curentă a utilizatorului sau setăm la 0 dacă nu există
+            let currentActivity = localStorage.getItem('user_activity_' + userEmail) || 0;
+
+            // Incrementăm activitatea cu 1 pentru fiecare conectare
+            currentActivity++;
+
+            // Actualizăm activitatea în Local Storage
+            localStorage.setItem('user_activity_' + userEmail, currentActivity);
+        }
+    }
+
+    // Adăugăm un ascultător de eveniment pentru trimiterea formularului de conectare
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Oprim trimiterea formularului pentru a nu reîmprospăta pagina
+        updateActivityOnLogin(); // Actualizăm activitatea utilizatorului
+        this.submit(); // Trimiterea formularului de conectare
+    });
+</script>
+
+</body>
+</html>

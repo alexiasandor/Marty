@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Users</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            color: #000000; /* Text negru */
+            margin: 0; /* Eliminăm marginile implicite */
+            padding: 0; /* Eliminăm padding-ul implicite */
+            background-image: url('https://images-na.ssl-images-amazon.com/images/I/916hGAvFMDL._AC_SX569_.jpg'); /* Adăugăm imaginea ca fundal */
+            background-size: cover; /* Asigurăm că imaginea se va întinde pentru a acoperi întreaga suprafață */
+            background-position: center; /* Poziționăm imaginea pe centru */
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+        .form-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff; /* Fundal alb pentru formular */
+        }
+        h2 {
+            text-align: center;
+        }
+
+        /* Stilizare butoane */
+        .btn {
+            margin-top: 10px;
+        }
+
+        /* Stilizare tabel */
+        table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #800000; /* Visiniu */
+            border-collapse: collapse;
+            background-color: #f5f5dc; /* Bej */
+        }
+
+        th,
+        td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+            background-color: #f6eded;
+            color: #800000; /* Visiniu */
+        }
+
+        th {
+            background-color: #f8f9fa; /* Culoare fundal antet tabel */
+            font-weight: bold;
+            text-align: left;
+        }
+
+        /* Stil pentru mesajele de eroare și succes */
+        .error-message {
+            color: red;
+        }
+
+        .success-message {
+            color: green;
+        }
+        .btn-back a {
+            color: #4b0505; /* Visiniu închis */
+            background-color: #dea074; /* Bej închis */
+            padding: 10px 20px; /* Margini pentru buton */
+            text-decoration: none; /* Eliminăm sublinierea */
+            border-radius: 5px; /* Rotunjim marginile */
+        }
+        .btn-back a:hover {
+            color: #8b4513; /* Schimbăm culoarea textului la hover */
+            background-color: #f5deb3; /* Schimbăm culoarea fundalului la hover */
+        }
+
+    </style>
+</head>
+<div class="btn-back">
+    <a href="/adminPageForUsers" >Back to Admin Page</a>
+</div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="text-center"> Find User by ID</h2>
+            <!-- Afișare erori -->
+            <p th:if="${errors != null}" class="error-message">
+                <!-- Display errors -->
+                <span th:text="${errors}" />
+            </p>
+
+            <!-- Afișare succes -->
+            <p th:unless="${errors != null}" class="success-message">
+                <!-- Show success message if errors is null -->
+                <span th:text="${success}" />
+            </p>
+            <div class="form-container">
+                <form id="findUserForm" class="form" method="POST" action="/user/getUserById/{id}">
+                    <div class="form-group">
+                        <label for="userId">User ID:</label>
+                        <input type="text" id="userId" name="id" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Find User</button>
+                </form>
+            </div>
+            <div id="errorMessage" class="alert alert-danger mt-3" th:if="${errorMessage}" th:text="${errorMessage}" style="display: none;"></div>
+        </div>
+        <div class="col-md-6">
+            <h2 class="text-center"> List All Users</h2>
+            <div class="form-container">
+                <form id="listUsersForm" class="form" method="GET" action="/user/getAllUsers">
+                    <button type="submit" class="btn btn-success btn-block">List All Users</button>
+                </form>
+            </div>
+            <div id="allUsersTable" th:if="${users}">
+                <h4>All Users:</h4>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Role</th>
+                        <th>Age</th>
+                        <th>Email</th>
+                        <th>Password</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Utilizăm Thymeleaf pentru a itera prin lista de utilizatori -->
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.userId}">ID</td>
+                        <td th:text="${user.firstNameUser}">First Name</td>
+                        <td th:text="${user.secondNameUser}">Last Name</td>
+                        <td th:text="${user.role}">Role</td>
+                        <td th:text="${user.age}">Age</td>
+                        <td th:text="${user.emailUser}">Email</td>
+                        <td th:text="${user.passwordUser}">Password</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Afișarea utilizatorului căutat după ID -->
+    <div id="userById" th:if="${user}">
+        <h2 class="text-center mt-5">User Found by ID</h2>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Role</th>
+                <th>Age</th>
+                <th>Email</th>
+                <th>Password</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${user.userId}">ID</td>
+                <td th:text="${user.firstNameUser}">First Name</td>
+                <td th:text="${user.secondNameUser}">Last Name</td>
+                <td th:text="${user.role}">Role</td>
+                <td th:text="${user.age}">Age</td>
+                <td th:text="${user.emailUser}">Email</td>
+                <td th:text="${user.passwordUser}">Password</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+</div>
+</body>
+</html>

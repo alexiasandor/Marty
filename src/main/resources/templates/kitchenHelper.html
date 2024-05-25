@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<link href = "//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      rel="stylesheet" id="bootstrap-css">
+<html lang="en" xmlns:th="http://www.thyneleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+
+            color: #000000; /* Text negru */
+            margin: 0; /* Eliminăm marginile implicite */
+            padding: 0; /* Eliminăm padding-ul implicite */
+            background-image: url('https://images-na.ssl-images-amazon.com/images/I/916hGAvFMDL._AC_SX569_.jpg'); /* Adăugăm imaginea ca fundal */
+            background-size: cover; /* Asigurăm că imaginea se va întinde pentru a acoperi întreaga suprafață */
+            background-position: center; /* Poziționăm imaginea pe centru */
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #4b0505; /
+        }
+
+        .btn {
+            width: 200px;
+            margin-bottom: 10px;
+            background-color: #f1db9a;
+            border-color: #f1db9a;
+        }
+
+        .btn:hover {
+            background-color: #f1db9a;
+            border-color: #f1db9a;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h1> Welcome, Chef!</h1>
+
+    <a href="/sendNotification" class="btn btn-primary btn-lg btn-block mb-3">Send a notification</a>
+    <a href="http://localhost:8080/" class="btn custom-btn btn-secondary">Home</a>
+
+</div>
+</body>
+</html>

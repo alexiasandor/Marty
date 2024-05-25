@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Product by ID</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+
+            color: #000000; /* Text negru */
+            margin: 0; /* Eliminăm marginile implicite */
+            padding: 0; /* Eliminăm padding-ul implicite */
+            background-image: url('https://images-na.ssl-images-amazon.com/images/I/916hGAvFMDL._AC_SX569_.jpg'); /* Adăugăm imaginea ca fundal */
+            background-size: cover; /* Asigurăm că imaginea se va întinde pentru a acoperi întreaga suprafață */
+            background-position: center; /* Poziționăm imaginea pe centru */
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container1{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px; /* Ajustăm înălțimea containerului */
+            margin-bottom: 20px; /* Adăugăm un spațiu între text și butoane */
+        }
+        .form-group {
+            text-align: center; /* Centrare text in interiorul formularului */
+        }
+
+        .btn {
+            background-color: #c9c4a4; /* Buton turqoise */
+            border-color: #c9c4a4; /* Culoare chenar buton */
+            color: #ffffff; /* Text alb pe buton */
+            padding: 10px 70px; /* Padding mai mare pentru chenarul butonului */
+            margin-top: 20px; /* Spatiu deasupra butonului */
+        }
+
+        .btn:hover {
+            background-color: #c9c4a4; /* Schimbare culoare buton la hover */
+            border-color: #c9c4a4; /* Schimbare culoare chenar buton la hover */
+        }
+
+        /* Stil pentru mesajele de eroare și succes */
+        .error-message {
+            color: red;
+        }
+
+        .success-message {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+<div class="container1">
+    <h2>Delete Product by ID</h2>
+</div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <!-- Afișare erori -->
+            <p th:if="${errors != null}" class="error-message">
+                <!-- Display errors -->
+                <span th:text="${errors}" />
+            </p>
+
+            <!-- Afișare succes -->
+            <p th:unless="${errors != null}" class="success-message">
+                <!-- Show success message if errors is null -->
+                <span th:text="${success}" />
+            </p>
+            <form id="deleteForm" method="POST" action="/product/deleteProduct/{id}">
+
+                <input type="hidden" name="_method" value="DELETE">
+                <div class="form-group">
+                    <label for="productId">Product ID</label>
+
+                    <input type="text" class="form-control" id="productId" name="id" required>
+                </div>
+                <button type="submit" class="btn btn-danger">Delete Product</button><br><br>
+                <a href="/adminPageForProducts" class="btn btn-secondary">Back to Admin Page</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

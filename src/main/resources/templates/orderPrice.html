@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculate Total Price</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+
+            color: #000000; /* Text negru */
+            margin: 0; /* Eliminăm marginile implicite */
+            padding: 0; /* Eliminăm padding-ul implicite */
+            background-image: url('https://images-na.ssl-images-amazon.com/images/I/916hGAvFMDL._AC_SX569_.jpg'); /* Adăugăm imaginea ca fundal */
+            background-size: cover; /* Asigurăm că imaginea se va întinde pentru a acoperi întreaga suprafață */
+            background-position: center; /* Poziționăm imaginea pe centru */
+        }
+
+        .container {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: #ffffff; /* Fundal alb pentru formular */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 100%; /* Latimea formularului sa fie 100% din container */
+            max-width: 400px; /* Limitarea latimii formularului */
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            text-align: center; /* Centrare text in interiorul formularului */
+        }
+
+        .btn {
+            width: 100%;
+            margin-top: 20px; /* Spatiu deasupra butonului */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 form-container">
+            <h2>Calculate Total Price</h2>
+            <!-- Afișare erori -->
+            <p th:if="${error != null}" style="color: red">
+                <span th:text="${error}" />
+            </p>
+            <p th:if="${success != null}" style="color: green">
+                <span th:text="${success}" />
+            </p>
+            <form method="POST" action="/ord/calculateTotalPrice">
+                <div class="form-group">
+                    <label for="tableNr">Table Nr:</label>
+                    <input type="text" class="form-control" id="tableNr" name="tableNr" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Calculate Total Price</button>
+
+                <a href=" http://localhost:8080/chelner" class="btn btn-secondary nav-btn">Back to waiter options</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

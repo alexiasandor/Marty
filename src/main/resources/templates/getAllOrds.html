@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Orders</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+
+            color: #000000; /* Text negru */
+            margin: 0; /* Eliminăm marginile implicite */
+            padding: 0; /* Eliminăm padding-ul implicite */
+            background-image: url('https://images-na.ssl-images-amazon.com/images/I/916hGAvFMDL._AC_SX569_.jpg'); /* Adăugăm imaginea ca fundal */
+            background-size: cover; /* Asigurăm că imaginea se va întinde pentru a acoperi întreaga suprafață */
+            background-position: center; /* Poziționăm imaginea pe centru */
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background: #ffffff; /* Fundal alb pentru containerul formularului */
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+
+        .btn-primary {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+        }
+
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #800000; /* Visiniu */
+            border-collapse: collapse;
+            background-color: #f5f5dc; /* Bej */
+        }
+
+        th,
+        td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+            background-color: #f6eded;
+            color: #800000; /* Visiniu */
+        }
+
+        th {
+            background-color: #f8f9fa; /* Culoare fundal antet tabel */
+            font-weight: bold;
+            text-align: left;
+        }
+
+        /* Stil pentru mesajele de eroare și succes */
+        .alert {
+            margin-top: 10px;
+        }
+        .btn-back a {
+            color: #4b0505; /* Visiniu închis */
+            background-color: #dea074; /* Bej închis */
+            padding: 10px 20px; /* Margini pentru buton */
+            text-decoration: none; /* Eliminăm sublinierea */
+            border-radius: 5px; /* Rotunjim marginile */
+        }
+        .btn-back a:hover {
+            color: #8b4513; /* Schimbăm culoarea textului la hover */
+            background-color: #f5deb3; /* Schimbăm culoarea fundalului la hover */
+        }
+    </style>
+</head>
+<body>
+<div class="btn-back">
+    <a href=" http://localhost:8080/chelner" >Back to waiter options</a>
+</div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="text-center">Find Order by ID</h2>
+            <div class="form-container">
+                <form id="findOrdForm" class="form" method="POST" action="/ord/getOrdById/{id}">
+                    <div class="form-group">
+                        <label for="ord_Id">Order ID:</label>
+                        <input type="text" id="ord_Id" name="id" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Find Order</button>
+                </form>
+            </div>
+            <div id="errorMessage" class="alert alert-danger mt-3" th:if="${errorMessage}" th:text="${errorMessage}" style="display: none;"></div>
+        </div>
+        <div class="col-md-6">
+            <h2 class="text-center">List All Orders</h2>
+            <div class="form-container">
+                <form id="listOrdsForm" class="form" method="GET" action="/ord/getAllSortedAscOrds">
+                    <select id="sortSelect" class="form-control">
+                        <option value="asc">List All Orders Asc</option>
+                        <option value="desc">List All Orders Desc</option>
+                    </select>
+                    <button type="button" id="submitBtn" class="btn btn-success btn-block">List All Orders</button>
+                </form>
+            </div>
+            <div id="allOrdsTable" th:if="${ords}">
+                <h4>All Orders:</h4>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Table Nr</th>
+                        <th>User</th>
+                        <th>Sale</th>
+                        <th style="width: 200px">Product List</th>
+                        <th>Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Utilizăm Thymeleaf pentru a itera prin lista de orders -->
+                    <tr th:each="ord : ${ords}">
+                        <td th:text="${ord.ord_Id}">ID</td>
+                        <td th:text="${ord.tableNr}">Table Nr</td>
+                        <td th:text="${ord.user.getFirstNameUser() }"> Waiter</td>
+                        <td th:text="${ord.sale.getSaleName()}">Sale</td>
+                        <td >
+                            <ol>
+                                <li th:each = "product: ${listMap.get(ord).keySet()}"  th:text="${product.getProductName()} + ' x ' + ${listMap.get(ord).get(product)}"></li>
+                            </ol>
+                        </td>
+                        <td th:text="${ord.getPrice()}">Price</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Afișarea comenzii căutate după ID -->
+    <div id="ordById" th:if="${ord}">
+        <h2 class="text-center mt-5">Order Found by ID</h2>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Table Nr</th>
+                <th>User</th>
+                <th>Sale</th>
+                <th>Product List</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${ord.ord_Id}">ID</td>
+                <td th:text="${ord.tableNr}">Table Nr</td>
+                <td th:text="${ord.user.getFirstNameUser() }"> Waiter</td>
+                <td th:text="${ord.sale.getSaleName()}">Sale</td>
+                <td >
+                    <ol>
+                        <li th:each = "product: ${listMap.get(ord).keySet()}"  th:text="${product.getProductName()} + ' x ' + ${listMap.get(ord).get(product)}"></li>
+                    </ol>
+                </td>
+                <td th:text="${ord.getPrice()}">Price</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    document.getElementById('sortSelect').addEventListener('change', function() {
+        var selectedValue = this.value;
+        var form = document.getElementById('listOrdsForm');
+        var submitBtn = document.getElementById('submitBtn');
+        if (selectedValue === 'asc') {
+            form.action = '/ord/getAllSortedOrds';
+            submitBtn.textContent = 'List All Orders Asc';
+        } else if (selectedValue === 'desc') {
+            form.action = '/ord/getAllSortedDescOrds';
+            submitBtn.textContent = 'List All Orders Desc';
+        }
+    });
+
+    document.getElementById('submitBtn').addEventListener('click', function() {
+        document.getElementById('listOrdsForm').submit();
+    });
+</script>
+
+</body>
+
+</html>

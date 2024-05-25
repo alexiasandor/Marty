@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<html lang="en" xmlns:th="http://www.thyneleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            color: #000000; /* Text negru */
+            margin: 0; /* Eliminăm marginile implicite */
+            padding: 0; /* Eliminăm padding-ul implicit */
+            background-image: url('https://images-na.ssl-images-amazon.com/images/I/916hGAvFMDL._AC_SX569_.jpg'); /* Adăugăm imaginea ca fundal */
+            background-size: cover; /* Asigurăm că imaginea se va întinde pentru a acoperi întreaga suprafață */
+            background-position: center; /* Poziționăm imaginea pe centru */
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Modificăm pentru a începe de sus */
+            align-items: center;
+            height: 100vh;
+            padding-top: 50px; /* Adăugăm spațiu de sus */
+        }
+        .container1{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px; /* Ajustăm înălțimea containerului */
+            margin-bottom: 20px; /* Adăugăm un spațiu între text și butoane */
+        }
+        .btn {
+            width: 200px;
+            margin-bottom: 10px;
+            background-color: #c9c4a4;
+            border-color: #c9c4a4;
+            color: #4b0505; /* Text negru */
+        }
+
+        .btn:hover {
+
+            border-color: #c9c4a4;
+            color: #4b0505; /* Text negru la hover */
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #4b0505; /* Textul alb */
+        }
+
+        .dropdown-btn {
+            width: 700px;
+            margin-bottom: 10px;
+            background-color: #c9c4a4;
+            border-color: #c9c4a4;
+            color: #4b0505;
+            cursor: pointer;
+            font-size: 18px;
+
+        }
+
+        .dropdown-content {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .dropdown-content.show {
+            display: flex;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0 20%;
+            margin-bottom: 50px; /* Adăugăm spațiu între butoanele de sus și butonul Home */
+        }
+
+        .button-group .dropdown-btn {
+            width: 45%;
+        }
+
+        .home-btn {
+            margin-top: 20px; /* Adăugăm spațiu deasupra butonului Home */
+        }
+    </style>
+</head>
+
+<body>
+<div class="container1">
+    <h1>Welcome Waiter!</h1>
+</div>
+
+<div class="container">
+    <div class="button-group">
+        <div>
+
+            <div >
+                <a href="/sale/addOrder" class="btn btn-lg btn-block mb-3">Add Order</a>
+                <a href="/getAllOrds" class="btn btn-info btn-lg btn-block mb-3">View Orders</a>
+                <a href="/deleteOrder" class="btn btn-lg btn-block mb-3">Delete Order</a>
+                <a href="/updateOrder" class="btn btn-lg btn-block mb-3">Update Order</a>
+            </div>
+        </div>
+        <div>
+                <a href="/managePayment" class="btn btn-lg btn-block mb-3">Manage the payment</a>
+                <a href="/generateFile" class="btn btn-lg btn-block mb-3">Generate File</a>
+                <a href="/messagesForWaiter" class="btn btn-lg btn-block mb-3">Messages</a>
+                <a href="http://localhost:8080/" class="btn custom-btn btn-lg btn-block mb-3">Home</a>
+            </div>
+        </div>
+    </div>
+    <a href="http://localhost:8080/" class="btn custom-btn btn-secondary home-btn">Home</a>
+</div>
+
+</body>
+</html>

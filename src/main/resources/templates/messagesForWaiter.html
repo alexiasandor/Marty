@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Waiter Messages</title>
+  <style>
+    body {
+      color: #000000;
+      margin: 0;
+      padding: 0;
+      background-image: url('https://images-na.ssl-images-amazon.com/images/I/916hGAvFMDL._AC_SX569_.jpg');
+      background-size: cover;
+      background-position: center;
+      font-family: Arial, sans-serif;
+    }
+
+    #message-container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .message {
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fff;
+    }
+
+    #messageCounter {
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+<div id="message-container">
+  <h2>Messages for Waiter</h2>
+  <div id="messageCounter">Messages received: 0</div>
+  <div id="messages"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script>
+  var socket = new SockJS('/ws');
+  var stompClient = Stomp.over(socket);
+  var messageCounter = 0; // Initialize counter
+
+  stompClient.connect({}, function (frame) {
+    console.log('Connected: ' + frame);
+    var userId = prompt("Enter your waiter ID:");
+    console.log('Waiter ID: ' + userId);
+    if (userId) {
+      incrementCounter(); // Increment counter if ID is provided
+      stompClient.subscribe('/user/' + userId + '/queue/messages', function (message) {
+        console.log("Message received: ", message.body);
+        showMessage(JSON.parse(message.body));
+      }, function (error) {
+        console.error('Error subscribing to channel: ', error);
+      });
+
+      // Trimite mesajul implicit
+      var defaultMessage = {
+        content: "Comanda este gata",
+        sender: "System",
+        recipientId: userId
+      };
+      console.log('Sending default message: ', defaultMessage);
+      stompClient.send("/app/sendMessage", {}, JSON.stringify(defaultMessage));
+    } else {
+      console.log('No user ID provided.');
+    }
+  }, function (error) {
+    console.error('Connection error: ', error);
+  });
+
+  function showMessage(message) {
+    var messagesDiv = document.getElementById('messages');
+    var messageElement = document.createElement('div');
+    messageElement.className = 'message';
+    messageElement.textContent = message.sender + ": " + message.content;
+    messagesDiv.appendChild(messageElement);
+  }
+
+  function incrementCounter() {
+    messageCounter++;
+    document.getElementById('messageCounter').innerText = 'Messages received: ' + messageCounter;
+  }
+
+</script>
+</body>
+</html>

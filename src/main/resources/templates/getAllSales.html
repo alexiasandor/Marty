@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Users</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+
+            color: #000000; /* Text negru */
+            margin: 0; /* Eliminăm marginile implicite */
+            padding: 0; /* Eliminăm padding-ul implicite */
+            background-image: url('https://images-na.ssl-images-amazon.com/images/I/916hGAvFMDL._AC_SX569_.jpg'); /* Adăugăm imaginea ca fundal */
+            background-size: cover; /* Asigurăm că imaginea se va întinde pentru a acoperi întreaga suprafață */
+            background-position: center; /* Poziționăm imaginea pe centru */
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+        .form-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #800000; /* Visiniu */
+            border-collapse: collapse;
+            background-color: #f5f5dc; /* Bej */
+        }
+
+        th,
+        td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+            background-color: #f6eded;
+            color: #800000; /* Visiniu */
+        }
+
+        th {
+            background-color: #f8f9fa; /* Culoare fundal antet tabel */
+            font-weight: bold;
+            text-align: left;
+        }
+        /* Stil pentru mesajele de eroare și succes */
+        .error-message {
+            color: red;
+        }
+
+        .success-message {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="http://localhost:8080/adminPageForSales" class="btn btn-secondary " >Back</a>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="text-center"> Find Sale by ID</h2>
+            <!-- Afișare erori -->
+            <p th:if="${errors != null}" class="error-message">
+                <!-- Display errors -->
+                <span th:text="${errors}" />
+            </p>
+
+            <!-- Afișare succes -->
+            <p th:unless="${errors != null}" class="success-message">
+                <!-- Show success message if errors is null -->
+                <span th:text="${success}" />
+            </p>
+
+            <div class="form-container">
+                <form id="findSaleForm" class="form" method="POST" action="/sale/getAllSales/{id}">
+                    <div class="form-group">
+                        <label for="saleId">Sale ID:</label>
+                        <input type="text" id="saleId" name="id" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Find Sale</button>
+                </form>
+            </div>
+            <div id="errorMessage" class="alert alert-danger mt-3" th:if="${errorMessage}" th:text="${errorMessage}" style="display: none;"></div>
+        </div>
+        <div class="col-md-6">
+            <h2 class="text-center"> List All Sales</h2>
+            <div class="form-container">
+                <form id="listSalesForm" class="form" method="GET" action="/sale/getAllSales">
+                    <button type="submit" class="btn btn-success btn-block">List All Sales</button>
+                </form>
+            </div>
+            <div id="allSalesTable" th:if="${sales}">
+                <h4>All Sales:</h4>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Sale Name</th>
+                        <th>Percent</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="sale : ${sales}">
+                        <td th:text="${sale.saleId}">ID</td>
+                        <td th:text="${sale.saleName}">Sale Name</td>
+                        <td th:text="${sale.percent}">Percent</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="saleById" th:if="${sale}">
+        <h2 class="text-center mt-5">Sale Found by ID</h2>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Sale Name</th>
+                <th>Percent</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${sale.saleId}">ID</td>
+                <td th:text="${sale.saleName}">Sale Name</td>
+                <td th:text="${sale.percent}">Percent</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+</div>
+</body>
+</html>
